@@ -42,8 +42,7 @@ coverage.xml
 
 # Mr Developer
 .mr.developer.cfg
-.project
-.pydevproject
+
 
 # Rope
 .ropeproject
@@ -55,7 +54,6 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-*.pydevproject
 .metadata
 .gradle
 bin/
