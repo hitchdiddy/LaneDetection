@@ -4,9 +4,9 @@ import os
 import sys
 import glob
 import math
-import BevTransformation
-import LineFitting
-import EdgeDetection
+from BevTransformation import BevTransformation
+#from LineFitting import LineFitting
+#from EdgeDetection import EdgeDetection
 from PyQt4 import QtCore, QtGui 
 
 from PyQt4.QtCore import QPoint, QTimer
@@ -26,6 +26,8 @@ def processImage(filename):
     
     
     flag, out = cv2.threshold(image, 104, 255, cv2.THRESH_BINARY)
+    
+    
     
     ## 1) Feature Extraction
     # Extract color channels
@@ -63,12 +65,17 @@ class ImageWidget(QWidget):
     def __init__(self):
         super(ImageWidget, self).__init__()
        
-        data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        #data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
         load_dir_images = 'images/'
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
         stump_images = '_im_cr.ppm'
         stump_groundTruth = '_la_cr.pgm'
+        
+        #objekts
+        self.bev = BevTransformation()
+        
         
         #get list of files in directory
         image_Data_loc = os.path.join(data_path,load_dir_images, '*'+stump_images)
@@ -133,6 +140,7 @@ class ImageWidget(QWidget):
         
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
+        cvBGRImg = self.bev.computeBev(cvBGRImg)
         self.pos += 1
         self.qpm = convertIpl(cvBGRImg)
         self.imageLabel.setPixmap(self.qpm)
