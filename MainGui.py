@@ -91,6 +91,7 @@ class ImageWidget(QWidget):
         self.bev = BevTransformation()
         self.linefitter = LineFitting()
         self.edgedetection = EdgeDetection()
+        self.polygonfitter = PolygonFitting()
         
         
         #get list of files in directory
@@ -202,6 +203,7 @@ class ImageWidget(QWidget):
         
         cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
         cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
+        cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg4)
         
         self.qpm4 = convertIplG(cvBGRImg4)
         self.qpm3 = convertIplG(cvBGRImg3)
