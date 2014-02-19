@@ -83,3 +83,6 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+/BevTransformation.pyc
+/EdgeDetection.pyc
+/LineFitting.pyc

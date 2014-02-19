@@ -5,8 +5,8 @@ import sys
 import glob
 import math
 from BevTransformation import BevTransformation
-#from LineFitting import LineFitting
-#from EdgeDetection import EdgeDetection
+from LineFitting import LineFitting
+from EdgeDetection import EdgeDetection
 from PyQt4 import QtCore, QtGui 
 
 from PyQt4.QtCore import QPoint, QTimer
@@ -65,8 +65,8 @@ class ImageWidget(QWidget):
     def __init__(self):
         super(ImageWidget, self).__init__()
        
-        #data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
-        data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
+        data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        #data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
         load_dir_images = 'images/'
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
@@ -75,6 +75,8 @@ class ImageWidget(QWidget):
         
         #objekts
         self.bev = BevTransformation()
+        self.linefitter = LineFitting()
+        self.edgedetection = EdgeDetection()
         
         
         #get list of files in directory
@@ -141,6 +143,7 @@ class ImageWidget(QWidget):
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
         cvBGRImg = self.bev.computeBev(cvBGRImg)
+        cvBGRImg = self.linefitter.findLine(cvBGRImg)
         self.pos += 1
         self.qpm = convertIpl(cvBGRImg)
         self.imageLabel.setPixmap(self.qpm)
