@@ -8,7 +8,7 @@ class BevTransformation:
     def __init__(self):
         pass
         
-    def computeBev(self,image):
+    def computeBev(self,image, value):
         y = 0 #Hoehe
         #Calibration data
         trans = matrix([[0.064204210331161901], [-1.1659632805953182],[ 1.9516283622638129]])
@@ -41,17 +41,19 @@ class BevTransformation:
         
         
         
-        
+        if(value < 0 or value > 400):
+            value = 300
         
         
         src = np.array([[350,131],[413,131],[75,325], [635,325]], np.float32)
-        dst = np.array([[310,400],[370,400],[310,700], [370,700]], np.float32)
+        dst = np.array([[310,value],[370,value],[310,800], [370,800]], np.float32)
         
         ret = cv2.getPerspectiveTransform(src, dst)
         
         newimg = cv2.warpPerspective(image, ret, (800,800))
         
-        #cv2.imshow("test", newimg)
+        cv2.imshow("test", newimg)
+        #cv2.imwrite("/home/jan/Downloads/RoadSegmentation_Tutorial/300.jpg", newimg)
         
         #cv2.waitKey()
         

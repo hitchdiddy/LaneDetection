@@ -168,7 +168,7 @@ class ImageWidget(QWidget):
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
         self.qpm = convertIpl(cvBGRImg)
-        cvBGRImg = self.bev.computeBev(cvBGRImg)
+        cvBGRImg = self.bev.computeBev(cvBGRImg,10)
         self.qpm2 = convertIpl(cvBGRImg)
         cvBGRImg = self.linefitter.findLine(cvBGRImg)
         self.qpm3 = convertIpl(cvBGRImg)
