@@ -66,8 +66,8 @@ class ImageWidget(QWidget):
     def __init__(self):
         super(ImageWidget, self).__init__()
        
-        #data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
-        data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
+        data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        #data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
         load_dir_images = 'images/'
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
@@ -94,6 +94,7 @@ class ImageWidget(QWidget):
         self.qpm = convertIpl(cvBGRImg)
         self.qpm2 = convertIpl(cvBGRImg)
         self.qpm3 = convertIpl(cvBGRImg)
+        self.qpm4 = convertIpl(cvBGRImg)
         self.setMinimumSize(width, height)
         self.setMaximumSize(self.minimumSize())
  
@@ -115,6 +116,10 @@ class ImageWidget(QWidget):
         self.imageLabel3 = QtGui.QLabel()
         self.imageLabel3.setPixmap(QtGui.QPixmap(self.qpm3))
         self.imageLabel3.setScaledContents(True)
+        
+        self.imageLabel4 = QtGui.QLabel()
+        self.imageLabel4.setPixmap(QtGui.QPixmap(self.qpm4))
+        self.imageLabel4.setScaledContents(True)
         #self.imageLabel.pixmap().scaled(QtCore.QSize(self.imageLabel.size()), QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation) 
         #self.imageLabel.move(15, 10)
 
@@ -141,6 +146,7 @@ class ImageWidget(QWidget):
         hbox.addWidget(self.imageLabel)
         hbox.addWidget(self.imageLabel2)
         hbox.addWidget(self.imageLabel3)
+        hbox.addWidget(self.imageLabel4)
         hbox.addWidget(okButton)
         
         
@@ -168,13 +174,15 @@ class ImageWidget(QWidget):
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
         self.qpm = convertIpl(cvBGRImg)
-        cvBGRImg = self.bev.computeBev(cvBGRImg)
-        self.qpm2 = convertIpl(cvBGRImg)
-        cvBGRImg = self.linefitter.findLine(cvBGRImg)
-        self.qpm3 = convertIpl(cvBGRImg)
+        cvBGRImg2 = self.bev.computeBev(cvBGRImg)
+        self.qpm2 = convertIpl(cvBGRImg2)
+        cvBGRImg3 = self.linefitter.findLine(cvBGRImg2)
+        self.qpm3 = convertIpl(cvBGRImg3)
         self.pos += 1
-        self.qpm = convertIpl(cvBGRImg)
         self.imageLabel.setPixmap(self.qpm)
+        self.imageLabel2.setPixmap(self.qpm2)
+        self.imageLabel3.setPixmap(self.qpm3)
+        self.imageLabel4.setPixmap(self.qpm4)
         #self.update()
 
  
