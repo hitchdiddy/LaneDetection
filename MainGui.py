@@ -57,6 +57,19 @@ def convertIpl(cvBGRImg):
 
     return qpm
 
+def convertIplG(cvBGRImg):
+    #BGR2RGB
+    cvRGBImg = cv2.cvtColor(cvBGRImg, cv2.cv.CV_GRAY2RGB)
+    
+    #convert numpy mat to pixmap image
+    qimg = QtGui.QImage(cvRGBImg.data,cvRGBImg.shape[1], cvRGBImg.shape[0], QtGui.QImage.Format_RGB888)
+    
+    #return qimg
+
+    qpm = QtGui.QPixmap.fromImage(qimg)    
+
+    return qpm
+
 
 
 
@@ -95,7 +108,7 @@ class ImageWidget(QWidget):
         self.qpm2 = convertIpl(cvBGRImg)
         self.qpm3 = convertIpl(cvBGRImg)
         self.qpm4 = convertIpl(cvBGRImg)
-        self.setMinimumSize(width, height)
+        self.setMinimumSize(width*2, height*3)
         self.setMaximumSize(self.minimumSize())
  
         self.initUI()
@@ -129,33 +142,36 @@ class ImageWidget(QWidget):
         sld = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         sld.setFocusPolicy(QtCore.Qt.NoFocus)
         sld.setGeometry(30, 40, 100, 30)
-        sld.valueChanged[int].connect(self.changeValue)
+        sld.valueChanged[int].connect(self.setMinTreshold)
         
         sld2 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         sld2.setFocusPolicy(QtCore.Qt.NoFocus)
         sld2.setGeometry(30, 40, 100, 30)
-        sld2.valueChanged[int].connect(self.changeValue)
+        sld2.valueChanged[int].connect(self.setMaxTreshold)
         
         sld3 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         sld3.setFocusPolicy(QtCore.Qt.NoFocus)
         sld3.setGeometry(30, 40, 100, 30)
-        sld3.valueChanged[int].connect(self.changeValue)
+        sld3.valueChanged[int].connect(self.setX)
 
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
         hbox.addWidget(self.imageLabel)
         hbox.addWidget(self.imageLabel2)
-        hbox.addWidget(self.imageLabel3)
-        hbox.addWidget(self.imageLabel4)
-        hbox.addWidget(okButton)
+        hbox2 = QtGui.QHBoxLayout()
+        hbox2.addStretch(1)
+        hbox2.addWidget(self.imageLabel3)
+        hbox2.addWidget(self.imageLabel4)
         
         
         vbox = QtGui.QVBoxLayout()
         vbox.addStretch(1)
         vbox.addLayout(hbox)
+        vbox.addLayout(hbox2)
         vbox.addWidget(sld)
         vbox.addWidget(sld2)
         vbox.addWidget(sld3)
+        vbox.addWidget(okButton)
         self.setLayout(vbox)
 
         self.timer = QTimer(self)
@@ -166,23 +182,38 @@ class ImageWidget(QWidget):
      #   painter = QPainter(self)
         #painter.drawImage(QPoint(0, 0), self.qpm)
 
-    def changeValue(self, value):
+    def setMinTreshold(self, value):
         print 'slider changed to {0}'.format(value)
+        self.edgedetection.setMinTresh(value*10)
+        
+    def setMaxTreshold(self, value):
+        print 'slider changed to {0}'.format(value)
+        self.edgedetection.setMaxTresh(value*10)
+    def setX(self, value):
+        print 'slider changed to {0}'.format(value)
+        self.bev.setAmount(value*4)
 
     def queryFrame(self):
         
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
-        self.qpm = convertIpl(cvBGRImg)
+        
         cvBGRImg2 = self.bev.computeBev(cvBGRImg)
+        
+        cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
+        cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
+        
+        self.qpm4 = convertIplG(cvBGRImg4)
+        self.qpm3 = convertIplG(cvBGRImg3)
         self.qpm2 = convertIpl(cvBGRImg2)
-        cvBGRImg3 = self.linefitter.findLine(cvBGRImg2)
-        self.qpm3 = convertIpl(cvBGRImg3)
+        self.qpm = convertIpl(cvBGRImg)
         self.pos += 1
         self.imageLabel.setPixmap(self.qpm)
         self.imageLabel2.setPixmap(self.qpm2)
         self.imageLabel3.setPixmap(self.qpm3)
         self.imageLabel4.setPixmap(self.qpm4)
+
+
         #self.update()
 
  
