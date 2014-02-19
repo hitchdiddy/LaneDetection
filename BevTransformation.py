@@ -51,12 +51,12 @@ class BevTransformation:
         
         newimg = cv2.warpPerspective(image, ret, (800,800))
         
-        cv2.imshow("test", newimg)
+        #cv2.imshow("test", newimg)
         
         #cv2.waitKey()
         
         
            
         
-        return image
+        return newimg
         
