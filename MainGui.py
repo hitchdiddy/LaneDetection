@@ -25,7 +25,9 @@ def processImage(filename):
     #cur_groundTruth = cur_groundTruth > 0;
     
     
-    flag, out = cv2.threshold(image, 104, 255, cv2.THRESH_BINARY)
+    #flag, out = cv2.threshold(image, 104, 255, cv2.THRESH_BINARY)
+    
+    out = image
         
     ## 1) Feature Extraction
     # Extract color channels

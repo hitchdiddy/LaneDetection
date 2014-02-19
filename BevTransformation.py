@@ -1,4 +1,7 @@
+import cv2
+import numpy as np
 from numpy import matrix
+from cv2 import waitKey
 
 class BevTransformation:
 
@@ -23,9 +26,36 @@ class BevTransformation:
         v_0 = center[1] * 2
         
         #BEV data
-        res = 0.1
+        res = 1
         xBounds = matrix([[-10],[10]])
-        yBounds = matrix([[0],[50]])
+        zBounds = matrix([[0],[50]])
+        
+        #Metrische Koordinatesystem
+        zVec = range(zBounds[0],zBounds[1],res)
+        xVec = range(xBounds[0],xBounds[1],res)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        src = np.array([[350,131],[413,131],[75,325], [635,325]], np.float32)
+        dst = np.array([[310,400],[370,400],[310,700], [370,700]], np.float32)
+        
+        ret = cv2.getPerspectiveTransform(src, dst)
+        
+        newimg = cv2.warpPerspective(image, ret, (800,800))
+        
+        cv2.imshow("test", newimg)
+        
+        #cv2.waitKey()
+        
+        
            
         
         return image
