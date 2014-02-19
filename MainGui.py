@@ -169,6 +169,7 @@ class ImageWidget(QWidget):
         self.edgedetection.setMaxTresh(value)
     def setX(self, value):
         print 'slider changed to {0}'.format(value)
+        self.bev.setAmount(value)
 
     def queryFrame(self):
         
@@ -176,7 +177,7 @@ class ImageWidget(QWidget):
         cvBGRImg = processImage(self.image_Data_files[self.pos])
         self.qpm = convertIpl(cvBGRImg)
 
-        cvBGRImg = self.bev.computeBev(cvBGRImg,10)
+        cvBGRImg = self.bev.computeBev(cvBGRImg)
 
         self.qpm2 = convertIpl(cvBGRImg)
         cvBGRImg = self.edgedetection.computeEdges(cvBGRImg)
