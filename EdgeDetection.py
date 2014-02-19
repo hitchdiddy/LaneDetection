@@ -10,10 +10,13 @@ class EdgeDetection:
     maxTresh = 3000
 
     def __init__(self):
+        self.minTresh = 2000
+        self.maxTresh = 3000
         pass
         
     def computeEdges(self,image):
-        return cv2.Canny(image, self.minTresh, self.maxTresh, apertureSize=5)
+        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        return cv2.Canny(gray_image, self.minTresh, self.maxTresh, apertureSize=5)
     
     
     

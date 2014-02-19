@@ -124,17 +124,17 @@ class ImageWidget(QWidget):
         sld = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         sld.setFocusPolicy(QtCore.Qt.NoFocus)
         sld.setGeometry(30, 40, 100, 30)
-        sld.valueChanged[int].connect(self.changeValue)
+        sld.valueChanged[int].connect(self.setMinTreshold)
         
         sld2 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         sld2.setFocusPolicy(QtCore.Qt.NoFocus)
         sld2.setGeometry(30, 40, 100, 30)
-        sld2.valueChanged[int].connect(self.changeValue)
+        sld2.valueChanged[int].connect(self.setMaxTreshold)
         
         sld3 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
         sld3.setFocusPolicy(QtCore.Qt.NoFocus)
         sld3.setGeometry(30, 40, 100, 30)
-        sld3.valueChanged[int].connect(self.changeValue)
+        sld3.valueChanged[int].connect(self.setX)
 
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
@@ -160,7 +160,14 @@ class ImageWidget(QWidget):
      #   painter = QPainter(self)
         #painter.drawImage(QPoint(0, 0), self.qpm)
 
-    def changeValue(self, value):
+    def setMinTreshold(self, value):
+        print 'slider changed to {0}'.format(value)
+        self.edgedetection.setMinTresh(value)
+        
+    def setMaxTreshold(self, value):
+        print 'slider changed to {0}'.format(value)
+        self.edgedetection.setMaxTresh(value)
+    def setX(self, value):
         print 'slider changed to {0}'.format(value)
 
     def queryFrame(self):
@@ -168,13 +175,18 @@ class ImageWidget(QWidget):
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
         self.qpm = convertIpl(cvBGRImg)
+        
         cvBGRImg = self.bev.computeBev(cvBGRImg)
         self.qpm2 = convertIpl(cvBGRImg)
-        cvBGRImg = self.linefitter.findLine(cvBGRImg)
-        self.qpm3 = convertIpl(cvBGRImg)
-        self.pos += 1
-        self.qpm = convertIpl(cvBGRImg)
-        self.imageLabel.setPixmap(self.qpm)
+        cvBGRImg = self.edgedetection.computeEdges(cvBGRImg)
+
+        
+        #self.qpm2 = convertIpl(cvBGRImg)
+        #cvBGRImg = self.linefitter.findLine(cvBGRImg)
+        #self.qpm3 = convertIpl(cvBGRImg)
+        #self.pos += 1
+        #self.qpm = convertIpl(cvBGRImg)
+        #self.imageLabel.setPixmap(self.qpm)
         #self.update()
 
  
