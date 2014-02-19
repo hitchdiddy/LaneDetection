@@ -26,9 +26,7 @@ def processImage(filename):
     
     
     flag, out = cv2.threshold(image, 104, 255, cv2.THRESH_BINARY)
-    
-    
-    
+        
     ## 1) Feature Extraction
     # Extract color channels
     # NOTE: OpenCV has BGR ordering
