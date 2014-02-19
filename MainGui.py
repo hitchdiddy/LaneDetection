@@ -124,6 +124,16 @@ class ImageWidget(QWidget):
         sld.setFocusPolicy(QtCore.Qt.NoFocus)
         sld.setGeometry(30, 40, 100, 30)
         sld.valueChanged[int].connect(self.changeValue)
+        
+        sld2 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        sld2.setFocusPolicy(QtCore.Qt.NoFocus)
+        sld2.setGeometry(30, 40, 100, 30)
+        sld2.valueChanged[int].connect(self.changeValue)
+        
+        sld3 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        sld3.setFocusPolicy(QtCore.Qt.NoFocus)
+        sld3.setGeometry(30, 40, 100, 30)
+        sld3.valueChanged[int].connect(self.changeValue)
 
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
@@ -137,6 +147,8 @@ class ImageWidget(QWidget):
         vbox.addStretch(1)
         vbox.addLayout(hbox)
         vbox.addWidget(sld)
+        vbox.addWidget(sld2)
+        vbox.addWidget(sld3)
         self.setLayout(vbox)
 
         self.timer = QTimer(self)
