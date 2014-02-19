@@ -203,8 +203,8 @@ class ImageWidget(QWidget):
         
         cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
         cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
-        cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg4)
-        
+        self.polygonfitter.findPolygon(cvBGRImg3)
+
         self.qpm4 = convertIplG(cvBGRImg4)
         self.qpm3 = convertIplG(cvBGRImg3)
         self.qpm2 = convertIpl(cvBGRImg2)
