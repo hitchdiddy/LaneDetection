@@ -85,6 +85,7 @@ class ImageWidget(QWidget):
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
         stump_images = '_im_cr.ppm'
+        #stump_images = 'jan.ppm'
         stump_groundTruth = '_la_cr.pgm'
         
         #objekts
@@ -217,7 +218,11 @@ class ImageWidget(QWidget):
         self.qpm3 = convertIplG(cvBGRImg3)
         self.qpm2 = convertIpl(cvBGRImg2)
         self.qpm = convertIpl(cvBGRImg)
-        self.pos += 1
+        if(len(self.image_Data_files)>self.pos+1):
+            self.pos += 1
+        else:
+            self.pos = 0
+        
         self.imageLabel.setPixmap(self.qpm)
         self.imageLabel2.setPixmap(self.qpm2)
         self.imageLabel3.setPixmap(self.qpm3)
