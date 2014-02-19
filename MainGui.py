@@ -5,9 +5,9 @@ import sys
 import glob
 import math
 from BevTransformation import BevTransformation
-
 from LineFitting import LineFitting
 from EdgeDetection import EdgeDetection
+from PolygonFitting import PolygonFitting
 from PyQt4 import QtCore, QtGui 
 
 from PyQt4.QtCore import QPoint, QTimer
@@ -79,8 +79,8 @@ class ImageWidget(QWidget):
     def __init__(self):
         super(ImageWidget, self).__init__()
        
-        data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
-        #data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
+        #data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
         load_dir_images = 'images/'
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
