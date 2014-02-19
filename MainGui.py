@@ -89,6 +89,8 @@ class ImageWidget(QWidget):
         cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         height, width, depth = cvBGRImg.shape
         self.qpm = convertIpl(cvBGRImg)
+        self.qpm2 = convertIpl(cvBGRImg)
+        self.qpm3 = convertIpl(cvBGRImg)
         self.setMinimumSize(width, height)
         self.setMaximumSize(self.minimumSize())
  
@@ -102,6 +104,14 @@ class ImageWidget(QWidget):
         self.imageLabel = QtGui.QLabel()
         self.imageLabel.setPixmap(QtGui.QPixmap(self.qpm))
         self.imageLabel.setScaledContents(True)
+        
+        self.imageLabel2 = QtGui.QLabel()
+        self.imageLabel2.setPixmap(QtGui.QPixmap(self.qpm2))
+        self.imageLabel2.setScaledContents(True)
+        
+        self.imageLabel3 = QtGui.QLabel()
+        self.imageLabel3.setPixmap(QtGui.QPixmap(self.qpm3))
+        self.imageLabel3.setScaledContents(True)
         #self.imageLabel.pixmap().scaled(QtCore.QSize(self.imageLabel.size()), QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation) 
         #self.imageLabel.move(15, 10)
 
@@ -116,6 +126,8 @@ class ImageWidget(QWidget):
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
         hbox.addWidget(self.imageLabel)
+        hbox.addWidget(self.imageLabel2)
+        hbox.addWidget(self.imageLabel3)
         hbox.addWidget(okButton)
         
         
@@ -140,8 +152,11 @@ class ImageWidget(QWidget):
         
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
+        self.qpm = convertIpl(cvBGRImg)
         cvBGRImg = self.bev.computeBev(cvBGRImg)
+        self.qpm2 = convertIpl(cvBGRImg)
         cvBGRImg = self.linefitter.findLine(cvBGRImg)
+        self.qpm3 = convertIpl(cvBGRImg)
         self.pos += 1
         self.qpm = convertIpl(cvBGRImg)
         self.imageLabel.setPixmap(self.qpm)
