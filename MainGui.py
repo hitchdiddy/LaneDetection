@@ -190,7 +190,7 @@ class ImageWidget(QWidget):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.queryFrame)
-        self.timer.start(250)
+        self.timer.start(1000)
 
     #def paintEvent(self, event):
      #   painter = QPainter(self)
