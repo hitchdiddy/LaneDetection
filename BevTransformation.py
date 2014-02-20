@@ -44,6 +44,8 @@ class BevTransformation:
         
         src = np.array([[350,131],[413,131],[75,325], [635,325]], np.float32)
         dst = np.array([[310,self.amount],[370,self.amount],[310,800], [370,800]], np.float32)
+        #src = np.array([[348,251],[414,251],[224,316], [539,316]], np.float32)
+        #dst = np.array([[310,50],[370,50],[310,800], [370,800]], np.float32)
         
         ret = cv2.getPerspectiveTransform(src, dst)
         

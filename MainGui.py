@@ -17,7 +17,7 @@ from PyQt4.QtGui import QApplication, QImage, QWidget
 
 def processImage(filename):
 
-    print 'processing'
+    #print 'processing'
     image = cv2.imread(filename)
     
     # Load current ground truth

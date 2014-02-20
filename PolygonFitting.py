@@ -18,7 +18,7 @@ class PolygonFitting:
                 roi = image[top:bottom,left:right]
                 #Summiere alle Pixel in diesem Bereich: summe[0] = 0 entspricht alles schwarz
                 summe = cv2.sumElems(roi)
-                print summe[0]
+                #print summe[0]
                 if(summe[0]<=20.0):
                     cv2.rectangle(image,(left,bottom),(right,top),(0,255,0),1) #rand
                 else:
