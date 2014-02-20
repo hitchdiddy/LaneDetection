@@ -40,19 +40,19 @@ class PolygonFitting:
             left = left + 10
             right = right + 10
           
-        cv2.imshow("Ohne Linie", originalimg)
+        #cv2.imshow("Ohne Linie", originalimg)
         #pass
         
-        cv2.circle(originalimg, (xSum/pointCount,ySum/pointCount),5,(128,0,0))
+        cv2.circle(originalimg, (xSum/pointCount,ySum/pointCount), 10,(255,0,0),20,8)
         
-        direction = cv2.fitLine(points,6, 0, 1, 0.01)
+        direction = cv2.fitLine(points, 6, 0, 1, 0.01)
         #cv2.line(originalimg, direction)
         #cv2.line(originalimg, (direction[2], direction[3]), (direction[2]+direction[0], direction[3]+direction[1]), (255,255,0),10)
         #for x in range(0, points.size/2-1):
             #ptOne = tuple(points[x])#(points[x,0], points[x,1])
             #ptTwo = tuple(points[x+1])#(points[x+1,0], points[x+1,1])
             #cv2.line(originalimg, ptOne, ptTwo, (0,0,255),1)
-        cv2.imshow("Mit Linie", originalimg)
+        #cv2.imshow("Mit Linie", originalimg)
         
         return originalimg
         
