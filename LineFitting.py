@@ -24,8 +24,8 @@ class LineFitting:
         for y in range(0, int(height/self.patchsizex/2)-1):
             for x in range(0, int(width/self.patchsizey/2)-1):
                 subimg = image[(x*self.patchsizex):(x*self.patchsizex+self.patchsizex),(y*self.patchsizey):(y*self.patchsizey+self.patchsizey)]
-                vector = cv2.HoughLines(subimg, self.rho, self.theta, self.threshold)
-                listVectors.append(vector)
+                #vector = cv2.HoughLines(subimg, self.rho, self.theta, self.threshold)
+                #listVectors.append(vector)
         
-        return listVectors.pop()
+        return image #listVectors.pop()
     
