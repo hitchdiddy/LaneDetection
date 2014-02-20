@@ -11,19 +11,19 @@ class PolygonFitting:
         bottomFix = 790
         leftFix = 266
         rightFix = 276
-        sideStep = 10
+        sideStep = 20
         top = topFix
         bottom = bottomFix
         left = leftFix
         right = rightFix
-        points = numpy.array([[346,800],[346,0]])
+        points = numpy.array([[346,800]])
         xSum = 0;
         ySum = 0;
         pointCount = 0;
-        ary = numpy.zeros((21, 18))
+        ary = numpy.zeros((21, 35))
         image = cv2.cvtColor(image, cv2.cv.CV_GRAY2RGB)
-        for y in range(0, 20):
-            for x in range(0, 17):       
+        for y in range(0, 15):
+            for x in range(0, 9):       
                 #Waehle Bildbereich zum Betrachten aus
                 roi = image[top:bottom,left:right]
                 #Summiere alle Pixel in diesem Bereich: summe[0] = 0 entspricht alles schwarz
@@ -38,7 +38,7 @@ class PolygonFitting:
                     pointCount += 1
                     ary[y,x]=0
                 else:
-                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
+                    #cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
                     ary[y,x]=1
                 left = left + sideStep
                 right = right + sideStep
@@ -54,26 +54,32 @@ class PolygonFitting:
         bottom = bottomFix
         left = leftFix
         right = rightFix
-        for y in range(0, 20):
+        center = 346
+        centerTop = 346
+        for y in range(0, 15):
+            sumItemsLeft = 0
+            sumItemsRight = 0
             found = False
-            left = leftFix + (sideStep*8)
-            right = rightFix + (sideStep*8)
-            for x in range(8, -1,-1):
+            left = leftFix + (sideStep*5)
+            right = rightFix + (sideStep*5)
+            for x in range(5, -1,-1):
                 if ary[y,x] == 1:
                     found = True
                 if found == True:
                     ary[y,x]=1
+                    sumItemsLeft += 1
                     cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1)
                 left = left - sideStep
                 right = right - sideStep
             found = False
-            left = leftFix + (sideStep*9)
-            right = rightFix + (sideStep*9)
-            for x in range(9, 17):
+            left = leftFix + (sideStep*5)
+            right = rightFix + (sideStep*5)
+            for x in range(5, 9):
                 if ary[y,x] == 1:
                     found = True
                 if found == True:
                     ary[y,x]=1
+                    sumItemsRight += 1
                     cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1)
                 left = left + sideStep
                 right = right + sideStep
@@ -81,13 +87,14 @@ class PolygonFitting:
             right = rightFix
             top = top - 20
             bottom = bottom - 20
+            #centerTop += #|sumLeft - sumRight| / 2
         
         
-        cv2.circle(originalimg, (xSum/pointCount,ySum/pointCount), 10,(255,255,255),20,8)
+        #cv2.circle(originalimg, (xSum/pointCount,ySum/pointCount), 10,(255,255,255),20,8)
       
-        #direction = cv2.fitLine(points, 6, 0, 1, 0.01)
+        direction = cv2.fitLine(points, cv2.cv.CV_DIST_L1, 0, 0.01, 0.01)
         #cv2.line(originalimg, direction)
-        #cv2.line(originalimg, (direction[2], direction[3]), (direction[2]+direction[0], direction[3]+direction[1]), (255,255,0),10)
+        cv2.line(originalimg, (346, 800), (346-(direction[0]*200), 800-numpy.abs(direction[1]*200)), (255,255,0),10)
         #for x in range(0, points.size/2-1):
             #ptOne = tuple(points[x])#(points[x,0], points[x,1])
             #ptTwo = tuple(points[x+1])#(points[x+1,0], points[x+1,1])
