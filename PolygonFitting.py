@@ -5,7 +5,7 @@ class PolygonFitting:
     def __init__(self):
         pass
     
-    def findPolygon(self, image):
+    def findPolygon(self, image, originalimg):
         
         top = 780
         bottom = 800
@@ -20,9 +20,9 @@ class PolygonFitting:
                 summe = cv2.sumElems(roi)
                 #print summe[0]
                 if(summe[0]<=20.0):
-                    cv2.rectangle(image,(left,bottom),(right,top),(0,255,0),1) #rand
+                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,255,0),1) #rand
                 else:
-                    cv2.rectangle(image,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
+                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
                 top = top - 20
                 bottom = bottom - 20
             bottom = 800
@@ -30,6 +30,7 @@ class PolygonFitting:
             left = left + 10
             right = right + 10
           
-        cv2.imshow("", image)
-        pass
+        #cv2.imshow("", image)
+        #pass
+        return originalimg
         

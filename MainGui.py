@@ -212,12 +212,14 @@ class ImageWidget(QWidget):
         
         cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
         cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
-        self.polygonfitter.findPolygon(cvBGRImg3)
+        cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3, cvBGRImg2.copy())
+        self.bev.computePers(cvBGRImg5)
 
         self.qpm4 = convertIplG(cvBGRImg4)
         self.qpm3 = convertIplG(cvBGRImg3)
         self.qpm2 = convertIpl(cvBGRImg2)
         self.qpm = convertIpl(cvBGRImg)
+        
         if(len(self.image_Data_files)>self.pos+1):
             self.pos += 1
         else:
