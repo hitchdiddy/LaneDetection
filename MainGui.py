@@ -79,8 +79,8 @@ class ImageWidget(QWidget):
     def __init__(self):
         super(ImageWidget, self).__init__()
        
-        #data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
-        data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
+        data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        #data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
         load_dir_images = 'images/'
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
@@ -161,6 +161,11 @@ class ImageWidget(QWidget):
         sld4.setGeometry(30, 40, 100, 30)
         sld4.valueChanged[int].connect(self.setSobel)
 
+        sld5 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        sld5.setFocusPolicy(QtCore.Qt.NoFocus)
+        sld5.setGeometry(30, 40, 100, 30)
+        sld5.valueChanged[int].connect(self.setLineThreshold)
+
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
         hbox.addWidget(self.imageLabel)
@@ -179,6 +184,7 @@ class ImageWidget(QWidget):
         vbox.addWidget(sld2)
         vbox.addWidget(sld3)
         vbox.addWidget(sld4)
+        vbox.addWidget(sld5)
         vbox.addWidget(okButton)
         self.setLayout(vbox)
 
@@ -203,6 +209,10 @@ class ImageWidget(QWidget):
     def setSobel(self, value):
         print 'slider changed to {0}'.format(value)
         self.edgedetection.setSobel(value/10)
+    def setLineThreshold(self, value):
+        print 'slider changed to {0}'.format(value)
+        self.linefitter.setThreshold(value)        
+        
     def queryFrame(self):
         
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
