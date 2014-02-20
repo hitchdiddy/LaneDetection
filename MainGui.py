@@ -5,9 +5,9 @@ import sys
 import glob
 import math
 from BevTransformation import BevTransformation
-
 from LineFitting import LineFitting
 from EdgeDetection import EdgeDetection
+from PolygonFitting import PolygonFitting
 from PyQt4 import QtCore, QtGui 
 
 from PyQt4.QtCore import QPoint, QTimer
@@ -79,18 +79,20 @@ class ImageWidget(QWidget):
     def __init__(self):
         super(ImageWidget, self).__init__()
        
-        data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
-        #data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
+        #data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
         load_dir_images = 'images/'
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
         stump_images = '_im_cr.ppm'
+        #stump_images = 'jan.ppm'
         stump_groundTruth = '_la_cr.pgm'
         
         #objekts
         self.bev = BevTransformation()
         self.linefitter = LineFitting()
         self.edgedetection = EdgeDetection()
+        self.polygonfitter = PolygonFitting()
         
         
         #get list of files in directory
@@ -154,6 +156,11 @@ class ImageWidget(QWidget):
         sld3.setGeometry(30, 40, 100, 30)
         sld3.valueChanged[int].connect(self.setX)
 
+        sld4 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        sld4.setFocusPolicy(QtCore.Qt.NoFocus)
+        sld4.setGeometry(30, 40, 100, 30)
+        sld4.valueChanged[int].connect(self.setSobel)
+
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
         hbox.addWidget(self.imageLabel)
@@ -171,6 +178,7 @@ class ImageWidget(QWidget):
         vbox.addWidget(sld)
         vbox.addWidget(sld2)
         vbox.addWidget(sld3)
+        vbox.addWidget(sld4)
         vbox.addWidget(okButton)
         self.setLayout(vbox)
 
@@ -192,7 +200,9 @@ class ImageWidget(QWidget):
     def setX(self, value):
         print 'slider changed to {0}'.format(value)
         self.bev.setAmount(value*4)
-
+    def setSobel(self, value):
+        print 'slider changed to {0}'.format(value)
+        self.edgedetection.setSobel(value/10)
     def queryFrame(self):
         
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
@@ -202,12 +212,17 @@ class ImageWidget(QWidget):
         
         cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
         cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
-        
+        self.polygonfitter.findPolygon(cvBGRImg3)
+
         self.qpm4 = convertIplG(cvBGRImg4)
         self.qpm3 = convertIplG(cvBGRImg3)
         self.qpm2 = convertIpl(cvBGRImg2)
         self.qpm = convertIpl(cvBGRImg)
-        self.pos += 1
+        if(len(self.image_Data_files)>self.pos+1):
+            self.pos += 1
+        else:
+            self.pos = 0
+        
         self.imageLabel.setPixmap(self.qpm)
         self.imageLabel2.setPixmap(self.qpm2)
         self.imageLabel3.setPixmap(self.qpm3)
