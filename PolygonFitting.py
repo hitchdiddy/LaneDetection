@@ -17,9 +17,6 @@ class PolygonFitting:
         left = leftFix
         right = rightFix
         points = numpy.array([[346,800]])
-        xSum = 0;
-        ySum = 0;
-        pointCount = 0;
         ary = numpy.zeros((21, 35))
         image = cv2.cvtColor(image, cv2.cv.CV_GRAY2RGB)
         for y in range(0, 15):
@@ -33,9 +30,6 @@ class PolygonFitting:
                     cv2.rectangle(originalimg,(left,bottom),(right,top),(0,255,0),0) #rand
                     #points.append([bottom, right])
                     points = numpy.concatenate((points, ([[right-((right-left)/2),bottom-((bottom-top)/2)]])))
-                    xSum += right-((right-left)/2)
-                    ySum += bottom-((bottom-top)/2)
-                    pointCount += 1
                     ary[y,x]=0
                 else:
                     #cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
@@ -87,14 +81,12 @@ class PolygonFitting:
             right = rightFix
             top = top - 20
             bottom = bottom - 20
-            #centerTop += #|sumLeft - sumRight| / 2
+            centerTop += numpy.abs(sumItemsLeft - sumItemsRight) / 2
         
-        
-        #cv2.circle(originalimg, (xSum/pointCount,ySum/pointCount), 10,(255,255,255),20,8)
-      
+              
         direction = cv2.fitLine(points, cv2.cv.CV_DIST_L1, 0, 0.01, 0.01)
-        #cv2.line(originalimg, direction)
-        cv2.line(originalimg, (346, 800), (346-(direction[0]*200), 800-numpy.abs(direction[1]*200)), (255,255,0),10)
+        #cv2.line(originalimg, (346, 800), (346-(direction[0]*200), 800-numpy.abs(direction[1]*200)), (255,255,0),10)
+        cv2.line(originalimg, (center, 800), (centerTop, 400), (255,255,0),10)
         cv2.imshow("Mit Linie", originalimg)
         
         return originalimg
