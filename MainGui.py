@@ -167,6 +167,12 @@ class ImageWidget(QWidget):
         sld5.setFocusPolicy(QtCore.Qt.NoFocus)
         sld5.setGeometry(30, 40, 100, 30)
         sld5.valueChanged[int].connect(self.setLineThreshold)
+        
+
+        sld6 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        sld6.setFocusPolicy(QtCore.Qt.NoFocus)
+        sld6.setGeometry(30, 40, 100, 30)
+        sld6.valueChanged[int].connect(self.setSobelKSize)        
 
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
@@ -187,6 +193,7 @@ class ImageWidget(QWidget):
         vbox.addWidget(sld3)
         vbox.addWidget(sld4)
         vbox.addWidget(sld5)
+        vbox.addWidget(sld6)
         vbox.addWidget(okButton)
         self.setLayout(vbox)
 
@@ -200,17 +207,20 @@ class ImageWidget(QWidget):
 
     def setMinTreshold(self, value):
         print 'slider changed to {0}'.format(value)
-        self.edgedetection.setMinTresh(value*10)
+        self.edgedetection.setMinTresh(value)
         
     def setMaxTreshold(self, value):
         print 'slider changed to {0}'.format(value)
-        self.edgedetection.setMaxTresh(value*10)
+        self.edgedetection.setMaxTresh(value)
     def setX(self, value):
         print 'slider changed to {0}'.format(value)
         self.bev.setAmount(value*4)
     def setSobel(self, value):
         print 'slider changed to {0}'.format(value)
-        self.edgedetection.setSobel(value/10)
+        self.edgedetection.setSobel(value)
+    def setSobelKSize(self, value):
+        print 'slider changed to {0}'.format(value)
+        self.edgedetection.setSobelKSize(value)   
     def setLineThreshold(self, value):
         print 'slider changed to {0}'.format(value)
         self.linefitter.setThreshold(value)        
@@ -224,8 +234,8 @@ class ImageWidget(QWidget):
         
         cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
         cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
-        cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3, cvBGRImg2.copy())
-        self.bev.computePers(cvBGRImg5)
+        #cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3, cvBGRImg2.copy())
+        #self.bev.computePers(cvBGRImg5)
 
         self.qpm4 = convertIplG(cvBGRImg4)
         self.qpm3 = convertIplG(cvBGRImg3)
