@@ -27,12 +27,12 @@ class PolygonFitting:
                 summe = cv2.sumElems(roi)
                 #print summe[0]
                 if(summe[0]<=10.0):
-                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,255,0),0) #rand
+                    #cv2.rectangle(originalimg,(left,bottom),(right,top),(0,255,0),0) #rand
                     #points.append([bottom, right])
                     points = numpy.concatenate((points, ([[right-((right-left)/2),bottom-((bottom-top)/2)]])))
                     ary[y,x]=0
                 else:
-                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
+                    #cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
                     ary[y,x]=1
                 left = left + sideStep
                 right = right + sideStep
@@ -62,7 +62,7 @@ class PolygonFitting:
                 if found == True:
                     ary[y,x]=1
                     sumItemsLeft += 1
-                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1)
+                    #cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1)
                 left = left - sideStep
                 right = right - sideStep
             found = False
@@ -74,7 +74,7 @@ class PolygonFitting:
                 if found == True:
                     ary[y,x]=1
                     sumItemsRight += 1
-                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1)
+                    #cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1)
                 left = left + sideStep
                 right = right + sideStep
             centerTop += (sumItemsLeft - sumItemsRight) / 2.0
@@ -88,9 +88,9 @@ class PolygonFitting:
                 center = centerTop
         
               
-        direction = cv2.fitLine(points, cv2.cv.CV_DIST_L1, 0, 0.01, 0.01)
+        #direction = cv2.fitLine(points, cv2.cv.CV_DIST_L1, 0, 0.01, 0.01)
         #cv2.line(originalimg, (346, 800), (346-(direction[0]*200), 800-numpy.abs(direction[1]*200)), (255,255,0),10)
-        cv2.line(originalimg, (int(center), 800), (int(centerTop), 700), (255,255,0),10)
+        #cv2.line(originalimg, (int(center), 800), (int(centerTop), 700), (255,255,0),10)
         cv2.imshow("Mit Linie", originalimg)
         
         return originalimg
