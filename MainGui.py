@@ -295,17 +295,18 @@ class ImageWidget(QWidget):
         
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
-        
-        cvBGRImg2 = self.bev.computeBev(cvBGRImg)
-        
-        cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
-        cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
-        #cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3, cvBGRImg2.copy())
-        #self.bev.computePers(cvBGRImg5)
+        cvBGRImg2 = self.edgedetection.computeEdges(cvBGRImg)
+        cvBGRImg2a = cv2.cvtColor(cvBGRImg2, cv2.cv.CV_GRAY2BGR)
+        cvBGRImg3 = self.bev.computeBev(cvBGRImg2a)
+        cvBGRImg3a = cv2.cvtColor(cvBGRImg3, cv2.cv.CV_BGR2GRAY)
+        rev, cvBGRImg3a = cv2.threshold(cvBGRImg3a, 200 , 255, cv2.THRESH_BINARY)
+        #cvBGRImg4 = self.linefitter.findLine(cvBGRImg3a)
+        cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3a, cvBGRImg2.copy())
+        self.bev.computePers(cvBGRImg5)
 
-        self.qpm4 = convertIplG(cvBGRImg4)
-        self.qpm3 = convertIplG(cvBGRImg3)
-        self.qpm2 = convertIpl(cvBGRImg2)
+        #self.qpm4 = convertIplG(cvBGRImg4)
+        self.qpm3 = convertIplG(cvBGRImg3a)
+        self.qpm2 = convertIplG(cvBGRImg2)
         self.qpm = convertIpl(cvBGRImg)
         
         if(len(self.image_Data_files)>self.pos+1):
