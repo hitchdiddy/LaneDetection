@@ -17,6 +17,8 @@ from PyQt4.QtGui import QApplication, QImage, QWidget
 
 def processImage(filename):
 
+    cv2.waitKey()
+
     #print 'processing'
     image = cv2.imread(filename)
         
@@ -141,6 +143,7 @@ class ImageWidget(QWidget):
         okButton = QtGui.QPushButton("OK")
         okButton.clicked.connect(QtCore.QCoreApplication.instance().quit)
         
+
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
         hbox.addWidget(self.imageLabel)
@@ -233,6 +236,20 @@ class ImageWidget(QWidget):
         
         vbox.addLayout(sld)
         
+        self.sdlText7 = QtGui.QLabel()
+        self.sdlText7.setText('set K Size:')
+        slda = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        slda.setFocusPolicy(QtCore.Qt.NoFocus)
+        slda.setGeometry(30, 40, 100, 30)
+        slda.valueChanged[int].connect(self.setSobelKSize)
+        sld = QtGui.QHBoxLayout()
+        
+        sld.addWidget(self.sdlText7)
+        sld.addWidget(slda)
+        
+        vbox.addLayout(sld)
+    
+    
         vbox.addWidget(okButton)
         self.setLayout(vbox)
 
@@ -246,13 +263,13 @@ class ImageWidget(QWidget):
 
     def setMinTreshold(self, value):
         print 'slider changed to {0}'.format(value)
-        self.edgedetection.setMinTresh(value*10)
-        self.sdlText.setText('EDGE set Min Threshold:{0}'.format(value*10))
+        self.edgedetection.setMinTresh(value)
+        self.sdlText.setText('EDGE set Min Threshold:{0}'.format(value))
         
     def setMaxTreshold(self, value):
         print 'slider changed to {0}'.format(value)
-        self.edgedetection.setMaxTresh(value*10)
-        self.sdlText2.setText('EDGE set Max Threshold:{0}'.format(value*10))
+        self.edgedetection.setMaxTresh(value)
+        self.sdlText2.setText('EDGE set Max Threshold:{0}'.format(value))
     def setX(self, value):
         print 'slider changed to {0}'.format(value)
         self.bev.setAmount(value*4)
@@ -261,6 +278,10 @@ class ImageWidget(QWidget):
         print 'slider changed to {0}'.format(value)
         self.edgedetection.setSobel(value/10)
         self.sdlText4.setText('EDGE set Sobel:{0}'.format(value/10))
+    def setSobelKSize(self, value):
+        print 'slider changed to {0}'.format(value)
+        self.edgedetection.setSobelKSize(value)   
+        self.sdlText7.setText('EDGE set Sobel K/Canny AP Size:{0}'.format(value))
     def setLineThreshold(self, value):
         print 'slider changed to {0}'.format(value)
         self.linefitter.setThreshold(value)
