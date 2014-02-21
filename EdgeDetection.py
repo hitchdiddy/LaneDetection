@@ -9,11 +9,13 @@ class EdgeDetection:
     minTresh = 2000
     maxTresh = 3000
     sobel = 0
+    sobelKSize = 5
 
     def __init__(self):
-        self.minTresh = 2000
-        self.maxTresh = 3000
+        self.minTresh = 12*50
+        self.maxTresh = 69*50
         self.sobel = 0
+        self.sobelKSize = 5
         pass
         
     def computeEdges(self,image):
@@ -23,9 +25,14 @@ class EdgeDetection:
         #image = cv2.Canny(image, self.minTresh, self.maxTresh, apertureSize=5)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
-        image = cv2.Canny(image, self.minTresh, self.maxTresh, apertureSize=5)
+        image = cv2.Canny(image, self.minTresh, self.maxTresh, apertureSize=self.sobelKSize)
+        #image = cv2.Sobel(image,cv2.CV_8U,self.sobel+1,0,ksize=self.sobelKSize)
         
-        image = cv2.Sobel(image,cv2.CV_8U,self.sobel+1,0,ksize=5)
+        kernel = np.ones((3,3),np.uint8)
+        #image = cv2.open(image, kernel)
+        #image = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
+        #
+        
         
         #image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
@@ -34,12 +41,16 @@ class EdgeDetection:
     
     
     def setMinTresh(self, val):
-        self.minTresh = val
+        self.minTresh = val*50
     def setMaxTresh(self, val):
-        self.maxTresh = val
+        self.maxTresh = val*50
     def setSobel(self, val):
-        self.sobel = val     
-    
+        self.sobel = val
+    def setSobelKSize(self, val):
+        val = val/3
+        if val%2 == 0:
+            val=val+1
+        self.sobelKSize = val      
     
     def main(self):
         print("hello")
