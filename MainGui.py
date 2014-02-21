@@ -81,8 +81,8 @@ class ImageWidget(QWidget):
     def __init__(self):
         super(ImageWidget, self).__init__()
        
-        data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
-        #data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
+        #data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
         load_dir_images = 'images/'
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
@@ -234,8 +234,8 @@ class ImageWidget(QWidget):
         
         cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
         cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
-        #cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3, cvBGRImg2.copy())
-        #self.bev.computePers(cvBGRImg5)
+        cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3, cvBGRImg2.copy())
+        self.bev.computePers(cvBGRImg5)
 
         self.qpm4 = convertIplG(cvBGRImg4)
         self.qpm3 = convertIplG(cvBGRImg3)

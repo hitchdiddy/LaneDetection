@@ -27,12 +27,12 @@ class PolygonFitting:
                 summe = cv2.sumElems(roi)
                 #print summe[0]
                 if(summe[0]<=10.0):
-                    #cv2.rectangle(originalimg,(left,bottom),(right,top),(0,255,0),0) #rand
+                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,255,0),0) #rand
                     #points.append([bottom, right])
-                    points = numpy.concatenate((points, ([[right-((right-left)/2),bottom-((bottom-top)/2)]])))
+                    #points = numpy.concatenate((points, ([[right-((right-left)/2),bottom-((bottom-top)/2)]])))
                     ary[y,x]=0
                 else:
-                    #cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
+                    cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1) #gefuellt
                     ary[y,x]=1
                 left = left + sideStep
                 right = right + sideStep
@@ -78,6 +78,7 @@ class PolygonFitting:
                 left = left + sideStep
                 right = right + sideStep
             centerTop += (sumItemsLeft - sumItemsRight) / 2.0
+            points = numpy.concatenate((points, ([[346 + int((sumItemsLeft - sumItemsRight)/2.0*sideStep),bottom-((bottom-top)/2)]])))
             cv2.circle(originalimg, (int(centerTop),bottom-((bottom-top)/2)),4, (128,128,128),-1)
             cv2.circle(originalimg, (346 + int((sumItemsLeft - sumItemsRight)/2.0*sideStep),bottom-((bottom-top)/2)),4, (255,255,255),-1)
             left = leftFix
@@ -88,9 +89,14 @@ class PolygonFitting:
                 center = centerTop
         
               
-        #direction = cv2.fitLine(points, cv2.cv.CV_DIST_L1, 0, 0.01, 0.01)
-        #cv2.line(originalimg, (346, 800), (346-(direction[0]*200), 800-numpy.abs(direction[1]*200)), (255,255,0),10)
-        #cv2.line(originalimg, (int(center), 800), (int(centerTop), 700), (255,255,0),10)
+        direction = cv2.fitLine(points, cv2.cv.CV_DIST_L1, 0, 0.01, 0.01)
+        x1=direction[2]
+        x2=346+(direction[0]*-200)
+        y1=direction[3]
+        y2=800-numpy.abs(direction[1]*-200)
+        print x1, y1, x2, y2
+        cv2.line(originalimg, (x1, y1), (x2, y2), (255,255,0),4)
+        #cv2.line(originalimg, (int(center), 800), (int(centerTop), 700), (255,255,0),2)
         cv2.imshow("Mit Linie", originalimg)
         
         return originalimg
