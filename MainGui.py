@@ -19,7 +19,7 @@ def processImage(filename):
 
     #print 'processing'
     image = cv2.imread(filename)
-    
+        
     # Load current ground truth
     #cur_groundTruth = cv2.imread(self.gt_Data_files[i], cv2.cv.CV_LOAD_IMAGE_GRAYSCALE)
     # GT -> binary map
@@ -79,8 +79,8 @@ class ImageWidget(QWidget):
     def __init__(self):
         super(ImageWidget, self).__init__()
        
-        #data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
-        data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
+        data_path = '/homes/jannik/BVSiAB/RoadSegmentation_Tutorial'
+        #data_path = '/home/jan/Downloads/RoadSegmentation_Tutorial/'
         load_dir_images = 'images/'
         load_dir_groundTruth = 'ground_truth/'
         data_dir = 'data/'
@@ -190,7 +190,7 @@ class ImageWidget(QWidget):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.queryFrame)
-        self.timer.start(1000)
+        self.timer.start(250)
 
     #def paintEvent(self, event):
      #   painter = QPainter(self)

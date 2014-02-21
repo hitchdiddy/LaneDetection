@@ -95,10 +95,6 @@ class PolygonFitting:
         direction = cv2.fitLine(points, cv2.cv.CV_DIST_L1, 0, 0.01, 0.01)
         #cv2.line(originalimg, direction)
         cv2.line(originalimg, (346, 800), (346-(direction[0]*200), 800-numpy.abs(direction[1]*200)), (255,255,0),10)
-        #for x in range(0, points.size/2-1):
-            #ptOne = tuple(points[x])#(points[x,0], points[x,1])
-            #ptTwo = tuple(points[x+1])#(points[x+1,0], points[x+1,1])
-            #cv2.line(originalimg, ptOne, ptTwo, (0,0,255),1)
         cv2.imshow("Mit Linie", originalimg)
         
         return originalimg

@@ -1,8 +1,6 @@
 import cv2
 import numpy as np
 import math
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 
 class LineFitting:
     patchsizex = 100
