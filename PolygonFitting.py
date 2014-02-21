@@ -49,14 +49,14 @@ class PolygonFitting:
         left = leftFix
         right = rightFix
         center = 346
-        centerTop = 346
-        for y in range(0, 5):
+        centerTop = 346.0
+        for y in range(0, 15):
             sumItemsLeft = 0
             sumItemsRight = 0
             found = False
-            left = leftFix + (sideStep*5)
-            right = rightFix + (sideStep*5)
-            for x in range(5, 0,-1):
+            left = leftFix + (sideStep*4)
+            right = rightFix + (sideStep*4)
+            for x in range(4, -1,-1):
                 if ary[y,x] == 1:
                     found = True
                 if found == True:
@@ -77,18 +77,20 @@ class PolygonFitting:
                     cv2.rectangle(originalimg,(left,bottom),(right,top),(0,0,255),-1)
                 left = left + sideStep
                 right = right + sideStep
+            centerTop += (sumItemsLeft - sumItemsRight) / 2.0
+            cv2.circle(originalimg, (int(centerTop),bottom-((bottom-top)/2)),4, (128,128,128),-1)
+            cv2.circle(originalimg, (346 + int((sumItemsLeft - sumItemsRight)/2.0*sideStep),bottom-((bottom-top)/2)),4, (255,255,255),-1)
             left = leftFix
             right = rightFix
             top = top - 20
             bottom = bottom - 20
-            centerTop += (sumItemsLeft - sumItemsRight) #/ 2
             if (y == 0):
                 center = centerTop
         
               
         direction = cv2.fitLine(points, cv2.cv.CV_DIST_L1, 0, 0.01, 0.01)
         #cv2.line(originalimg, (346, 800), (346-(direction[0]*200), 800-numpy.abs(direction[1]*200)), (255,255,0),10)
-        cv2.line(originalimg, (center, 800), (centerTop, 700), (255,255,0),10)
+        cv2.line(originalimg, (int(center), 800), (int(centerTop), 700), (255,255,0),10)
         cv2.imshow("Mit Linie", originalimg)
         
         return originalimg
