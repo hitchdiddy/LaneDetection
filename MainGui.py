@@ -17,6 +17,8 @@ from PyQt4.QtGui import QApplication, QImage, QWidget
 
 def processImage(filename):
 
+    cv2.waitKey()
+
     #print 'processing'
     image = cv2.imread(filename)
         
