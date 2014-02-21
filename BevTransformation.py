@@ -41,7 +41,7 @@ class BevTransformation:
         #transform the image
         newimg = cv2.warpPerspective(image, ret, (800,800),flags=cv2.WARP_INVERSE_MAP)
         newimg = newimg[120:320,0:800]
-        cv2.imshow("test2", newimg)
+        #cv2.imshow("test2", newimg)
         return newimg
     
     def fitLine(self, image):

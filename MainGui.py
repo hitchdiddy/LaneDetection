@@ -142,37 +142,7 @@ class ImageWidget(QWidget):
 
         okButton = QtGui.QPushButton("OK")
         okButton.clicked.connect(QtCore.QCoreApplication.instance().quit)
-
-        sld = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-        sld.setFocusPolicy(QtCore.Qt.NoFocus)
-        sld.setGeometry(30, 40, 100, 30)
-        sld.valueChanged[int].connect(self.setMinTreshold)
         
-        sld2 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-        sld2.setFocusPolicy(QtCore.Qt.NoFocus)
-        sld2.setGeometry(30, 40, 100, 30)
-        sld2.valueChanged[int].connect(self.setMaxTreshold)
-        
-        sld3 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-        sld3.setFocusPolicy(QtCore.Qt.NoFocus)
-        sld3.setGeometry(30, 40, 100, 30)
-        sld3.valueChanged[int].connect(self.setX)
-
-        sld4 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-        sld4.setFocusPolicy(QtCore.Qt.NoFocus)
-        sld4.setGeometry(30, 40, 100, 30)
-        sld4.valueChanged[int].connect(self.setSobel)
-
-        sld5 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-        sld5.setFocusPolicy(QtCore.Qt.NoFocus)
-        sld5.setGeometry(30, 40, 100, 30)
-        sld5.valueChanged[int].connect(self.setLineThreshold)
-        
-
-        sld6 = QtGui.QSlider(QtCore.Qt.Horizontal, self)
-        sld6.setFocusPolicy(QtCore.Qt.NoFocus)
-        sld6.setGeometry(30, 40, 100, 30)
-        sld6.valueChanged[int].connect(self.setSobelKSize)        
 
         hbox = QtGui.QHBoxLayout()
         hbox.addStretch(1)
@@ -183,17 +153,103 @@ class ImageWidget(QWidget):
         hbox2.addWidget(self.imageLabel3)
         hbox2.addWidget(self.imageLabel4)
         
-        
         vbox = QtGui.QVBoxLayout()
         vbox.addStretch(1)
         vbox.addLayout(hbox)
         vbox.addLayout(hbox2)
-        vbox.addWidget(sld)
-        vbox.addWidget(sld2)
-        vbox.addWidget(sld3)
-        vbox.addWidget(sld4)
-        vbox.addWidget(sld5)
-        vbox.addWidget(sld6)
+
+        self.sdlText = QtGui.QLabel()
+        self.sdlText.setText('set Min Threshold')
+        slda = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        slda.setFocusPolicy(QtCore.Qt.NoFocus)
+        slda.setGeometry(30, 40, 100, 30)
+        slda.valueChanged[int].connect(self.setMinTreshold)
+        sld = QtGui.QHBoxLayout()
+        
+        sld.addWidget(self.sdlText)
+        sld.addWidget(slda)
+        vbox.addLayout(sld)
+        
+        
+        self.sdlText2 = QtGui.QLabel()
+        self.sdlText2.setText('Set Max Treshold:')
+        slda = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        slda.setFocusPolicy(QtCore.Qt.NoFocus)
+        slda.setGeometry(30, 40, 100, 30)
+        slda.valueChanged[int].connect(self.setMaxTreshold)
+        sld = QtGui.QHBoxLayout()
+        
+        sld.addWidget(self.sdlText2)
+        sld.addWidget(slda)
+        vbox.addLayout(sld)
+        
+        
+        
+        self.sdlText3 = QtGui.QLabel()
+        self.sdlText3.setText('Set X: ')
+        slda = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        slda.setFocusPolicy(QtCore.Qt.NoFocus)
+        slda.setGeometry(0, 0, 300, 30)
+        slda.valueChanged[int].connect(self.setX)
+        sld = QtGui.QHBoxLayout()
+        
+        sld.addWidget(self.sdlText3)
+        sld.addWidget(slda)
+        vbox.addLayout(sld)
+        
+        
+        self.sdlText4 = QtGui.QLabel()
+        self.sdlText4.setText('set Sobel:')
+        slda = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        slda.setFocusPolicy(QtCore.Qt.NoFocus)
+        slda.setGeometry(30, 40, 100, 30)
+        slda.valueChanged[int].connect(self.setSobel)
+        sld = QtGui.QHBoxLayout()
+        
+        sld.addWidget(self.sdlText4)
+        sld.addWidget(slda)
+        vbox.addLayout(sld)
+        
+        self.sdlText5 = QtGui.QLabel()
+        self.sdlText5.setText('set Line Threshold:')
+        slda = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        slda.setFocusPolicy(QtCore.Qt.NoFocus)
+        slda.setGeometry(30, 40, 100, 30)
+        slda.valueChanged[int].connect(self.setLineThreshold)
+        sld = QtGui.QHBoxLayout()
+        
+        sld.addWidget(self.sdlText5)
+        sld.addWidget(slda)
+        
+        vbox.addLayout(sld)
+        
+        self.sdlText6 = QtGui.QLabel()
+        self.sdlText6.setText('set Line Length:')
+        slda = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        slda.setFocusPolicy(QtCore.Qt.NoFocus)
+        slda.setGeometry(30, 40, 100, 30)
+        slda.valueChanged[int].connect(self.setLineLength)
+        sld = QtGui.QHBoxLayout()
+        
+        sld.addWidget(self.sdlText6)
+        sld.addWidget(slda)
+        
+        vbox.addLayout(sld)
+        
+        self.sdlText7 = QtGui.QLabel()
+        self.sdlText7.setText('set K Size:')
+        slda = QtGui.QSlider(QtCore.Qt.Horizontal, self)
+        slda.setFocusPolicy(QtCore.Qt.NoFocus)
+        slda.setGeometry(30, 40, 100, 30)
+        slda.valueChanged[int].connect(self.setSobelKSize)
+        sld = QtGui.QHBoxLayout()
+        
+        sld.addWidget(self.sdlText7)
+        sld.addWidget(slda)
+        
+        vbox.addLayout(sld)
+    
+    
         vbox.addWidget(okButton)
         self.setLayout(vbox)
 
@@ -208,38 +264,50 @@ class ImageWidget(QWidget):
     def setMinTreshold(self, value):
         print 'slider changed to {0}'.format(value)
         self.edgedetection.setMinTresh(value)
+        self.sdlText.setText('EDGE set Min Threshold:{0}'.format(value))
         
     def setMaxTreshold(self, value):
         print 'slider changed to {0}'.format(value)
         self.edgedetection.setMaxTresh(value)
+        self.sdlText2.setText('EDGE set Max Threshold:{0}'.format(value))
     def setX(self, value):
         print 'slider changed to {0}'.format(value)
         self.bev.setAmount(value*4)
+        self.sdlText3.setText('BEV set X Threshold:{0}'.format(value*4))
     def setSobel(self, value):
         print 'slider changed to {0}'.format(value)
-        self.edgedetection.setSobel(value)
+        self.edgedetection.setSobel(value/10)
+        self.sdlText4.setText('EDGE set Sobel:{0}'.format(value/10))
     def setSobelKSize(self, value):
         print 'slider changed to {0}'.format(value)
         self.edgedetection.setSobelKSize(value)   
+        self.sdlText7.setText('EDGE set Sobel K/Canny AP Size:{0}'.format(value))
     def setLineThreshold(self, value):
         print 'slider changed to {0}'.format(value)
-        self.linefitter.setThreshold(value)        
-        
+        self.linefitter.setThreshold(value)
+        self.sdlText5.setText('LINE set Threshold:{0}'.format(value))        
+    def setLineLength(self, value):
+        print 'slider changed to {0}'.format(value)
+        tmp = self.linefitter.setMinLength(value)
+        self.sdlText6.setText('LINE set MinLength:{0}'.format(tmp))    
+    
     def queryFrame(self):
         
 #        cvBGRImg = cv2.imread(self.image_Data_files[self.pos])
         cvBGRImg = processImage(self.image_Data_files[self.pos])
-        
-        cvBGRImg2 = self.bev.computeBev(cvBGRImg)
-        
-        cvBGRImg3 = self.edgedetection.computeEdges(cvBGRImg2)
-        cvBGRImg4 = self.linefitter.findLine(cvBGRImg3)
-        cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3, cvBGRImg2.copy())
-        self.bev.computePers(cvBGRImg5)
+        cvBGRImg2 = self.edgedetection.computeEdges(cvBGRImg)
+        cvBGRImg3b = self.bev.computeBev(cvBGRImg)
+        cvBGRImg2a = cv2.cvtColor(cvBGRImg2, cv2.cv.CV_GRAY2BGR)
+        cvBGRImg3 = self.bev.computeBev(cvBGRImg2a)
+        cvBGRImg3a = cv2.cvtColor(cvBGRImg3, cv2.cv.CV_BGR2GRAY)
+        rev, cvBGRImg3a = cv2.threshold(cvBGRImg3a, 200 , 255, cv2.THRESH_BINARY)
+        #cvBGRImg4 = self.linefitter.findLine(cvBGRImg3a)
+        cvBGRImg5 = self.polygonfitter.findPolygon(cvBGRImg3a, cvBGRImg3b.copy())
+        cvBGRImg6 = self.bev.computePers(cvBGRImg5)
 
-        self.qpm4 = convertIplG(cvBGRImg4)
-        self.qpm3 = convertIplG(cvBGRImg3)
-        self.qpm2 = convertIpl(cvBGRImg2)
+        self.qpm4 = convertIpl(cvBGRImg6)
+        self.qpm3 = convertIplG(cvBGRImg3a)
+        self.qpm2 = convertIplG(cvBGRImg2)
         self.qpm = convertIpl(cvBGRImg)
         
         if(len(self.image_Data_files)>self.pos+1):
